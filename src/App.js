@@ -20,8 +20,6 @@ function App() {
 
   const [searchText, setSearchText] = useState("");
 
-  console.log(state);
-
   const handleAPI = () => {
     fetch(`${URL}/${searchText}`)
       .then((res) => res.json())
@@ -57,7 +55,7 @@ function App() {
           </button>
         </div>
         {state.message ? (
-          <h2>{state.message}</h2>
+          <h2 className="flex justify-center text-xl">{state.message}!</h2>
         ) : (
           <div className="bg-[#222222] w-[350px] h-auto p-[8px] rounded shadow-[2px_4px_8px_1px_rgba(6,6,6)]">
             <div className="flex justify-center pt-[10px] pr-[0px]">
@@ -69,7 +67,9 @@ function App() {
             </div>
             <div>
               <Title text={state.name} />
-              <Subtitle text={state.username} />
+              <a href={state.html_url} target="_blank" rel="noreferrer">
+                <Subtitle text={state.username} />
+              </a>
               <Desc text={state.description} />
               <div className="flex flex-row justify-around mt-[20px] mr-0 mb-[10px]">
                 <Card title="Following" count={state.following} />
