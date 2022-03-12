@@ -14,11 +14,13 @@ function App() {
     name: "your name",
     username: "your username",
     description: "your description",
+    following: 0,
+    follower: 0,
   });
 
   const [searchText, setSearchText] = useState("");
 
-  console.log(searchText);
+  console.log(state);
 
   const handleAPI = () => {
     fetch(`${URL}/${searchText}`)
@@ -29,6 +31,9 @@ function App() {
           name: result.name,
           username: result.login,
           description: result.bio,
+          following: result.following,
+          follower: result.followers,
+          ...result,
         });
       });
   };
@@ -51,25 +56,28 @@ function App() {
             search
           </button>
         </div>
-        <div className="bg-[#222222] w-[350px] h-auto p-[8px] rounded shadow-[2px_4px_8px_1px_rgba(6,6,6)]">
-          <div className="flex justify-center pt-[10px] pr-[0px]">
-            <img
-              className="w-[200px] h-[200px] rounded-full"
-              src={state.imageUrl}
-              alt="avatar"
-            />
-          </div>
-          <div>
-            <Title text={state.name} />
-            <Subtitle text={state.username} />
-            <Desc text={state.description} />
-            <div className="flex flex-row justify-around mt-[20px] mr-0 mb-[10px]">
-              <Card title="Following" count={8} />
-              <Card title="Followers" count={7} />
-              <Card title="Stars" count={1} />
+        {state.message ? (
+          <h2>{state.message}</h2>
+        ) : (
+          <div className="bg-[#222222] w-[350px] h-auto p-[8px] rounded shadow-[2px_4px_8px_1px_rgba(6,6,6)]">
+            <div className="flex justify-center pt-[10px] pr-[0px]">
+              <img
+                className="w-[200px] h-[200px] rounded-full"
+                src={state.imageUrl}
+                alt="avatar"
+              />
+            </div>
+            <div>
+              <Title text={state.name} />
+              <Subtitle text={state.username} />
+              <Desc text={state.description} />
+              <div className="flex flex-row justify-around mt-[20px] mr-0 mb-[10px]">
+                <Card title="Following" count={state.following} />
+                <Card title="Followers" count={state.follower} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
         {/* <div className="w-full place-self-center">
           <Form values={state} setValues={setState} />
         </div> */}
